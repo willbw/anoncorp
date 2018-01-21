@@ -25,13 +25,14 @@ let customers = [
 ]
 
 app.post('/api/search', (req, res) => {
-  console.log(req.body)
-  // let searchterm = req.body
-  // let response = []
-  // for (let i = 0; i < customers.length; i++){
-  //   if (customers[i].name )
-  // }
-  res.json({name: 'Donald J. Trump', favouriteColour: 'Amethyst'})
+  let searchterm = req.body.searchterm
+  let matches = []
+  for (let i = 0; i < customers.length; i++){
+    if (customers[i].name.toLowerCase().includes(searchterm.toLowerCase())) {
+      matches.push(customers[i])
+    }
+  }
+  res.json(matches)
 })
 
 app.listen(port, () => console.log(`Server started on port ${port}`))

@@ -1,17 +1,26 @@
 import React, { Component } from 'react'
 import SearchBar from './components/search-bar'
+import Results from './components/search-results'
+import AddCustomer from './components/add-customer'
 
 class App extends Component {
   constructor(props){
     super(props)
+
     this.state = {
-      results : []
+      personList : []
     }
-    this.customerSearch('Ge')
-    console.log('yeah just sent it')
   }
 
-  customerSearch(searchterm) {
+  componentDidMount(){
+    // console.log('state after mount:', this.state)
+  }
+
+  customerSearch = (searchterm) => {
+    if (searchterm.length === 0) {
+      this.setState({personList: []})
+      return
+    }
     let data = {searchterm: searchterm}
     fetch('/api/search', {
       method: 'POST',
@@ -20,9 +29,10 @@ class App extends Component {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
       console.log ('Request succeeded with response', data)
+      this.setState({personList: data})
     })
     .catch(error => {
       console.log('Request failed', error)
@@ -33,7 +43,15 @@ class App extends Component {
     return (
       <div className="container">
         <h1>Customer Management</h1>
-        <SearchBar customerSearch={this.customerSearch} />
+        <div className="row">
+          <div className="col-sm">
+            <SearchBar customerSearch={this.customerSearch} />
+            <Results personList={this.state.personList} />
+          </div>
+          <div className="col-sm">
+            <AddCustomer />
+          </div>
+        </div>
       </div>
     );
   }
