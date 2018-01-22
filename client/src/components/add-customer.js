@@ -28,15 +28,18 @@ class AddCustomer extends Component {
   render() {
     return(
       <div>
-        <div className="p-3 mb-2 h3 border rounded border-primary">Add New Customer</div>
+        <div className="p-3 mb-2 h3 border rounded border-primary bg-light">
+        Add New Customer</div>
         <form id="add-customer" onSubmit={(event) => {this.add(event)}}>
           <div className="form-group">
             <label>Name</label>
-            <input className="form-control" onChange={event => {this.onNameChange(event)}} required />
+            <input className="form-control"
+            onChange={event => {this.onNameChange(event)}} required />
           </div>
           <div className="form-group">
             <label>Favourite Colour</label>
-            <input className="form-control" onChange={event => {this.onColourChange(event)}} required />
+            <input className="form-control"
+            onChange={event => {this.onColourChange(event)}} required />
           </div>
           <button
           type="submit" 

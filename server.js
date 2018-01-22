@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = process.env.PORT || 5000
 const path = require('path')
-const db = new Object // this will be a dummy variable for our database, not functional
+// Database connection object - clearly this is not connected
+const connection = new Object 
 
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
@@ -29,6 +30,7 @@ let customers = [
 ]
 
 // Searches our list of customers for those whose name contains the search term
+// Then returns the result as an array
 app.post('/api/search', (req, res) => {
   let searchterm = req.body.searchterm
   let results = []
@@ -40,20 +42,24 @@ app.post('/api/search', (req, res) => {
   res.json(results)
 })
 
-// In reality our data could be held in a SQL database (I am most familiar with Microsoft 
-// SQL Server syntax from my work experience, so will use it here)
+// In reality our data could be held in a SQL database 
 app.post('/api/sql_search', (req, res) => {
   let searchterm = req.body.searchterm
-  let results = db.query('SELECT customer, favourite_colour FROM CUSTOMERS WHERE CUSTOMERS.NAME LIKE \'%' + searchterm + '%\'')
-  res.json(results)
+  let results = connection.query('SELECT name, favourite_colour FROM CUSTOMERS WHERE CUSTOMERS.name = \'' + searchterm + '\'',
+    (err, records) => {
+      res.json(records)
+    })
 })
 
+// Pushes new customer with their favourite colour onto our customers array
 app.post('/api/addcustomer', (req, res) => {
   let newCustomer = req.body
   customers.push(newCustomer)
   res.sendStatus(200)
 })
 
+// Returns a string with all of the existing customers, to be shown as an alert
+//  within the browser by React
 app.get('/api/customerlist', (req, res) => {
   let customerList = customers.map(cust => {
     return `Name: ${cust.name}. Favourite Colour: ${cust.favouriteColour}.`

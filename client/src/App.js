@@ -13,10 +13,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
-    // console.log('state after mount:', this.state)
-  }
-
   customerSearch = searchterm => {
     if (searchterm.trim().length === 0) {
       this.setState({personList: []})
@@ -50,7 +46,6 @@ class App extends Component {
   }
 
   getCustomers = () => {
-    // alert('hey, you tried to get customers')
     fetch('/api/customerlist', {
       method: 'GET',
     })
@@ -66,7 +61,9 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-      <div className="p-3 mb-2 rounded bg-dark text-white"><h1>Anon Corp Customer Management</h1></div>
+      <div className="p-3 mb-2 rounded bg-dark text-white">
+        <h1>Anon Corp Customer Management</h1>
+      </div>
         <div className="row">
           <div className="col-sm">
             <SearchBar customerSearch={this.customerSearch} />
