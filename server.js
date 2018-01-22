@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000
 const db = new Object // this will be a dummy variable for our database, not functional
 
 app.use(bodyParser.urlencoded({ extended: false}))
@@ -60,4 +60,4 @@ app.get('/api/customerlist', (req, res) => {
   res.send(customerList)
 })
 
-app.listen(port, () => console.log('Server started on port 5000'))
+app.listen(port, () => console.log(`Server started on port ${port}`))
