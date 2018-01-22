@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const port = process.env.PORT || 5000
+const path = require('path')
 const db = new Object // this will be a dummy variable for our database, not functional
 
 app.use(bodyParser.urlencoded({ extended: false}))
@@ -59,5 +60,9 @@ app.get('/api/customerlist', (req, res) => {
   customerList = customerList.join('\n')
   res.send(customerList)
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/public/index.html'));
+});
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
