@@ -12,8 +12,9 @@ class SearchBar extends Component {
   render(){
     return(
       <div>
-      <h3>Customer Search</h3>
-      <p>Hint: all of the customers are US presidents inaugurated on or after 1933.</p>
+      <div className="p-3 mb-2 h3 border rounded border-primary">Customer Search</div>
+      <div className="alert alert-info">Hint: all of the customers are US presidents inaugurated on or after 1933.
+      Favourite colours have not been verified for their authenticity.</div>
         <input
           placeholder="Enter a customer name"
           value={this.state.searchterm}
