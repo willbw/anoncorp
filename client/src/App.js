@@ -56,7 +56,7 @@ class App extends Component {
     })
     .then(response => response.text())
     .then(data => {
-      alert(data)
+      alert('List of current customers:\n\n'.concat(data))
     })
     .catch(error => {
       console.log('Request failed', error)
