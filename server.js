@@ -7,6 +7,7 @@ const db = new Object // this will be a dummy variable for our database, not fun
 
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // So our app functions, we will store the values for customers here
 // In reality, they would be held in a database
